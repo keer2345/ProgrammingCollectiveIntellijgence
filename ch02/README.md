@@ -94,3 +94,15 @@ def topMatchs(prefs, person, n=5, similarity=sim_person):
     scores.reverse()
     return scores[0:n]
 ```
+## 测试
+```python
+if __name__ == '__main__':
+    print '欧几里德距离：', sim_distance(critics.critics, 'Lisa Rose', 'Gene Seymour')
+    #  0.294298055086
+
+    print '皮尔逊相关系数：', sim_person(critics.critics, 'Lisa Rose', 'Gene Seymour')
+    #  0.396059017191
+
+    print '根据评分寻找最佳匹配者（采用皮尔逊系数）：', topMatchs(critics.critics, 'Toby', n=3)
+    print '根据评分寻找最佳匹配者（采用欧几里德距离）：', topMatchs(critics.critics, 'Toby', n=3, similarity=sim_distance)
+```
