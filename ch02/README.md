@@ -1,7 +1,7 @@
 # Chapter 2 提供推荐
 ## 搜集偏好
 ### 数据集`critics.py`
-```
+```python
 critics = {'Lisa Rose': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.5,
                          'Just My Luck': 3.0, 'Superman Returns': 3.5, 'You, Me and Dupree': 2.5,
                          'The Night Listener': 3.0},
@@ -22,7 +22,7 @@ critics = {'Lisa Rose': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.5,
 ```
 ## 寻找相近的用户
 ### 欧几里德距离评价
-```
+```python
 #  欧几里德距离
 def sim_distance(prefs, person1, person2):
     si = {}
@@ -42,7 +42,7 @@ def sim_distance(prefs, person1, person2):
     return 1 / (1 + sqrt(sum_of_squares))
 ```
 ### 皮尔逊相关度评价
-```
+```python
 #  皮尔逊相关系数
 def sim_person(prefs, person1, person2):
     si = {}
@@ -85,4 +85,12 @@ def sim_person(prefs, person1, person2):
 ### 曼哈顿距离算法
 
 ## 为评论者打分
-
+```python
+#  根据评分寻找最佳匹配者
+#  返回结果的个数和相似度函数均为可选参数
+def topMatchs(prefs, person, n=5, similarity=sim_person):
+    scores = sorted([(similarity(prefs, person, other), other)
+                     for other in prefs if other != person])
+    scores.reverse()
+    return scores[0:n]
+```

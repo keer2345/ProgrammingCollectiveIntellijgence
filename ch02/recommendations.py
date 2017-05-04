@@ -59,9 +59,21 @@ def sim_person(prefs, person1, person2):
     return r
 
 
+#  根据评分寻找最佳匹配者
+#  返回结果的个数和相似度函数均为可选参数
+def topMatchs(prefs, person, n=5, similarity=sim_person):
+    scores = sorted([(similarity(prefs, person, other), other)
+                     for other in prefs if other != person])
+    scores.reverse()
+    return scores[0:n]
+
+
 if __name__ == '__main__':
     print '欧几里德距离：', sim_distance(critics.critics, 'Lisa Rose', 'Gene Seymour')
     #  0.294298055086
 
     print '皮尔逊相关系数：', sim_person(critics.critics, 'Lisa Rose', 'Gene Seymour')
     #  0.396059017191
+
+    print '根据评分寻找最佳匹配者（采用皮尔逊系数）：', topMatchs(critics.critics, 'Toby', n=3)
+    print '根据评分寻找最佳匹配者（采用欧几里德距离）：', topMatchs(critics.critics, 'Toby', n=3, similarity=sim_distance)
